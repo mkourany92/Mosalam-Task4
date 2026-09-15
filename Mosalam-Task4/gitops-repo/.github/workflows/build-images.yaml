@@ -5,9 +5,9 @@ on:
     branches:
       - main
     paths:
-      - "Mosalam-Apps/frontend/**"
-      - "Mosalam-Apps/backend/**"
-      - "gitops-repo/.github/workflows/build-images.yaml"
+      - "apps/frontend/**"
+      - "apps/backend/**"
+      - ".github/workflows/build-images.yaml"
 
 permissions:
   contents: read
@@ -35,8 +35,8 @@ jobs:
       - name: Build and push frontend
         uses: docker/build-push-action@v6
         with:
-          context: Mosalam-Apps/frontend
-          file: Mosalam-Apps/frontend/Dockerfile
+          context: apps/frontend
+          file: apps/frontend/Dockerfile
           push: true
           tags: |
             ghcr.io/${{ github.repository_owner }}/mosalam-frontend:${{ steps.image.outputs.tag }}
@@ -45,8 +45,8 @@ jobs:
       - name: Build and push backend
         uses: docker/build-push-action@v6
         with:
-          context: Mosalam-Apps/backend
-          file: Mosalam-Apps/backend/Dockerfile
+          context: apps/backend
+          file: apps/backend/Dockerfile
           push: true
           tags: |
             ghcr.io/${{ github.repository_owner }}/mosalam-backend:${{ steps.image.outputs.tag }}
