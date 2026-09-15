@@ -7,7 +7,7 @@ on:
     paths:
       - "Mosalam-Apps/frontend/**"
       - "Mosalam-Apps/backend/**"
-      - "gitops-repo/.github/workflows/build-images.yaml"
+      - ".github/workflows/build-images.yaml"
 
 permissions:
   contents: read
