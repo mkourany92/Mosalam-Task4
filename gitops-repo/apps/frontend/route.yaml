@@ -7,7 +7,13 @@ spec:
   parentRefs:
     - name: platform-gateway
       namespace: default
+  hostnames:
+    - app.mosalam.local
   rules:
-    - backendRefs:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
         - name: frontend
-          port: 80
+          port: 8

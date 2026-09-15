@@ -15,13 +15,21 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: nginx:1.27
+          image: ghcr.io/mkourany92/mosalam-frontend:latest
+          imagePullPolicy: Always
           ports:
-            - containerPort: 80
+            - name: http
+              containerPort: 80
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 10
           resources:
             requests:
-              cpu: 100m
-              memory: 128Mi
+              cpu: 25m
+              memory: 64Mi
             limits:
-              cpu: 500m
-              memory: 512Mi
+              cpu: 200m
+              memory: 256Mi
