@@ -1,0 +1,32 @@
+name: Validate GitOps
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "gitops-repo/**"
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install kubeconform
+        run: |
+          curl -sSLo kubeconform.tar.gz \
+            https://github.com/yannh/kubeconform/releases/latest/download/kubeconform-linux-amd64.tar.gz
+          tar -xzf kubeconform.tar.gz
+          sudo mv kubeconform /usr/local/bin/kubeconform
+
+      - name: Validate manifests
+        run: |
+          find gitops-repo/apps gitops-repo/infrastructure \
+            -type f \( -name '*.yaml' -o -name '*.yml' \) \
+            -print0 | xargs -0 kubeconform \
+            -strict \
+            -summary \
+            -ignore-missing-schemas
