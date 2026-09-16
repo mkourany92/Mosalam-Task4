@@ -1,0 +1,28 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: backend-policy
+  namespace: app-prod
+spec:
+  endpointSelector:
+    matchLabels:
+      app: backend
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            app: frontend
+  egress:
+    - toEndpoints:
+        - matchLabels:
+            app: mysql
+      toPorts:
+        - ports:
+            - port: "3306"
+              protocol: TCP
+    - toEndpoints:
+        - matchLabels:
+            app: redis
+      toPorts:
+        - ports:
+            - port: "6379"
+              protocol: TCP
